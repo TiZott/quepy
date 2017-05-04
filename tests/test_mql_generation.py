@@ -8,6 +8,7 @@
 #          Gonzalo Garcia Berrotaran <ggarcia@machinalis.com>
 
 import json
+import six
 from random import seed
 import unittest
 from random_expression import random_expression
@@ -35,15 +36,15 @@ class TestMqlGeneration(unittest.TestCase):
                 self.assertIsInstance(x[0], dict)
                 self.assertEqual(len(x), 1)
                 for key, value in x[0].iteritems():
-                    self.assertIsInstance(key, unicode)
+                    self.assertIsInstance(key, six.text_type)
                     q.append(value)
             else:
-                self.assertIsInstance(x, unicode)
+                self.assertIsInstance(x, six.text_type)
 
     def _valid_target_for_query(self, target, query):
         self.assertIsInstance(target, list)
         for entry in target:
-            self.assertIsInstance(entry, unicode)
+            self.assertIsInstance(entry, six.text_type)
         x = self._get_json(query)
         if x is None:
             return
@@ -58,7 +59,7 @@ class TestMqlGeneration(unittest.TestCase):
 
     def test_mql_stress(self):
         seed("playadito vs amanda... 3 focas")
-        for _ in xrange(100):
+        for _ in six.moves.xrange(100):
             expression = random_expression()
             target, mql = generate_mql(expression)
             self._valid_mql_query(mql)

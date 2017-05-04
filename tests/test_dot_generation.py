@@ -7,6 +7,8 @@
 # Authors: Rafael Carrascosa <rcarrascosa@machinalis.com>
 #          Gonzalo Garcia Berrotaran <ggarcia@machinalis.com>
 
+from __future__ import print_function
+import six
 import unittest
 import tempfile
 import subprocess
@@ -38,8 +40,8 @@ def gen_fixedrelation(rel, e):
 class TestDotGeneration(unittest.TestCase):
 
     def _standard_check(self, s, e):
-        self.assertIsInstance(s, unicode)
-        vs = [u"x{}".format(i) for i in xrange(len(e))]
+        self.assertIsInstance(s, six.text_type)
+        vs = [u"x{}".format(i) for i in six.moves.xrange(len(e))]
         for var in vs:
             self.assertIn(var, s)
 
@@ -66,7 +68,7 @@ class TestDotGeneration(unittest.TestCase):
         dot_file = tempfile.NamedTemporaryFile()
         cmdline = "dot %s" % dot_file.name
         msg = "dot returned error code {}, check {} input file."
-        for _ in xrange(100):
+        for _ in six.moves.xrange(100):
             expression = random_expression()
             _, dot_string = expression_to_dot(expression)
             with open(dot_file.name, "w") as filehandler:
@@ -76,7 +78,7 @@ class TestDotGeneration(unittest.TestCase):
                 retcode = subprocess.call(cmdline.split(),
                                           stdout=tempfile.TemporaryFile())
             except OSError:
-                print "Warning: the program 'dot' was not found, tests skipped"
+                print("Warning: the program 'dot' was not found, tests skipped")
                 return
             if retcode != 0:
                 dot_file.delete = False

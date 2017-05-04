@@ -9,18 +9,18 @@ def random_data(only_ascii=False):
     while first or 1 / 20.0 < random.random():
         first = False
         if only_ascii:
-            c = unichr(random.randint(33, 126))
+            c = six.unichr(random.randint(33, 126))
             data.append(c)
             continue
         x = random.random()
         if 0.1 > x:
             c = random.choice(u" ./\n")
         elif 0.50 > x:
-            c = unichr(random.randint(65, 122))
+            c = six.unichr(random.randint(65, 122))
         elif 0.85 > x:
-            c = unichr(random.randint(0, 127))
+            c = six.unichr(random.randint(0, 127))
         else:
-            c = unichr(random.randint(0, 65535))
+            c = six.unichr(random.randint(0, 65535))
         data.append(c)
     return u"".join(data)
 
@@ -32,6 +32,8 @@ def random_relation(only_ascii=False):
         return data
 
     class UnicodeableDummy(object):
+        def __str__(self):
+            return self.__unicode__()
         def __unicode__(self):
             return data
     return UnicodeableDummy()

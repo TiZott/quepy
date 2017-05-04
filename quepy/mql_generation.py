@@ -2,6 +2,7 @@
 
 import re
 import json
+import six
 from quepy.dsl import IsRelatedTo
 from quepy.expression import isnode
 from quepy.encodingpolicy import encoding_flexible_conversion
@@ -25,13 +26,13 @@ def safely_to_unicode(x):
     Given an "edge" (a relation) or "a data" from an `Expression` graph
     transform it into a unicode string fitted for insertion into a MQL query.
     """
-    if isinstance(x, unicode):
+    if isinstance(x, six.text_type):
         return x
     if isinstance(x, str):
         return encoding_flexible_conversion(x)
     if isinstance(x, IsRelatedTo):
         return u"/type/reflect/any_master"
-    return unicode(x)  # FIXME: Any object is unicode-able, this is error prone
+    return six.text_type(x)  # FIXME: Any object is unicode-able, this is error prone
 
 
 def to_bidirected_graph(e):

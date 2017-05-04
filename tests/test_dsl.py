@@ -8,6 +8,7 @@
 #          Gonzalo Garcia Berrotaran <ggarcia@machinalis.com>
 
 import unittest
+import six
 from quepy.expression import Expression
 from quepy.dsl import HasKeyword, FixedRelation, FixedType, \
     FixedDataRelation
@@ -39,9 +40,9 @@ class TestDSL(unittest.TestCase):
         edges = list(fixedinstance.iter_edges(head))
 
         self.assertEqual(len(edges), 1)
-        self.assertIsInstance(edges[0][0], unicode)
+        self.assertIsInstance(edges[0][0], six.text_type)
         self.assertEqual(edges[0][0], u"rdf:type")
-        self.assertIsInstance(edges[0][1], unicode)
+        self.assertIsInstance(edges[0][1], six.text_type)
         self.assertEqual(edges[0][1], u"uranium:blowtorch")
 
     def test_fixed_data_relation(self):
@@ -54,9 +55,9 @@ class TestDSL(unittest.TestCase):
         edges = list(fixedinstance.iter_edges(head))
 
         self.assertEqual(len(edges), 1)
-        self.assertIsInstance(edges[0][0], unicode)
+        self.assertIsInstance(edges[0][0], six.text_type)
         self.assertEqual(edges[0][0], u"uranium:blowtorch")
-        self.assertIsInstance(edges[0][1], unicode)
+        self.assertIsInstance(edges[0][1], six.text_type)
         self.assertEqual(edges[0][1], u"soplete")
 
     def test_has_keyword(self):
@@ -67,9 +68,9 @@ class TestDSL(unittest.TestCase):
         head = keywordinstance.get_head()
         edges = list(keywordinstance.iter_edges(head))
         self.assertEqual(len(edges), 1)
-        self.assertIsInstance(edges[0][0], unicode)
+        self.assertIsInstance(edges[0][0], six.text_type)
         self.assertEqual(edges[0][0], u"uranium:keyword")
-        self.assertIsInstance(edges[0][1], unicode)
+        self.assertIsInstance(edges[0][1], six.text_type)
         self.assertEqual(edges[0][1], u'soplete')
 
         # With language
@@ -79,7 +80,7 @@ class TestDSL(unittest.TestCase):
         head = keywordinstance.get_head()
         edges = list(keywordinstance.iter_edges(head))
         self.assertEqual(len(edges), 1)
-        self.assertIsInstance(edges[0][1], unicode)
+        self.assertIsInstance(edges[0][1], six.text_type)
         self.assertEqual(edges[0][1], u'"soplete"@en')
 
         # With sanitize
@@ -89,7 +90,7 @@ class TestDSL(unittest.TestCase):
         head = keywordinstance.get_head()
         edges = list(keywordinstance.iter_edges(head))
         self.assertEqual(len(edges), 1)
-        self.assertIsInstance(edges[0][1], unicode)
+        self.assertIsInstance(edges[0][1], six.text_type)
         self.assertEqual(edges[0][1], u'"SOPLETE"@en')
 
 

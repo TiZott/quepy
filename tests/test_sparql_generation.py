@@ -9,6 +9,7 @@
 
 import re
 import unittest
+import six
 from random_expression import random_expression
 from random import seed
 from quepy.sparql_generation import expression_to_sparql
@@ -42,8 +43,8 @@ class TestSparqlGeneration(unittest.TestCase):
                                      re.DOTALL)
 
     def _standard_check(self, s, e):
-        self.assertIsInstance(s, unicode)
-        vs = [u"x{}".format(i) for i in xrange(len(e))]
+        self.assertIsInstance(s, six.text_type)
+        vs = [u"x{}".format(i) for i in six.moves.xrange(len(e))]
         for var in vs:
             self.assertIn(var, s)
 
@@ -67,7 +68,7 @@ class TestSparqlGeneration(unittest.TestCase):
     @unittest.skip("should be fixed")
     def test_sparql_ascii_stress(self):
         seed("sacala dunga dunga dunga")
-        for _ in xrange(100):
+        for _ in six.moves.xrange(100):
             expression = random_expression(only_ascii=True)
             _, s = expression_to_sparql(expression)
             self._standard_check(s, expression)
@@ -75,7 +76,7 @@ class TestSparqlGeneration(unittest.TestCase):
 
     def test_sparql_stress(self):
         seed("sacala dunga dunga dunga")
-        for _ in xrange(100):
+        for _ in six.moves.xrange(100):
             expression = random_expression()
             try:
                 _, s = expression_to_sparql(expression)

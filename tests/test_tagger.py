@@ -13,24 +13,25 @@ Tests for tagger.
 """
 
 import unittest
+import six
 from quepy import tagger
 
 
 class TestTagger(unittest.TestCase):
     def test_tagset_unicode(self):
         for tag in tagger.PENN_TAGSET:
-            self.assertIsInstance(tag, unicode)
+            self.assertIsInstance(tag, six.text_type)
 
     def test_word_encoding(self):
         word = tagger.Word(token=u"æßđħłłþłłł@æµß",
                            lemma=u"ŧłþłßæ#¶ŋħ~#~@",
                            pos=u"øĸŋøħþ€ĸłþ€øæ«»¢")
 
-        self.assertIsInstance(word.token, unicode)
+        self.assertIsInstance(word.token, six.text_type)
         self.assertEqual(word.token, u"æßđħłłþłłł@æµß")
-        self.assertIsInstance(word.lemma, unicode)
+        self.assertIsInstance(word.lemma, six.text_type)
         self.assertEqual(word.lemma, u"ŧłþłßæ#¶ŋħ~#~@")
-        self.assertIsInstance(word.pos, unicode)
+        self.assertIsInstance(word.pos, six.text_type)
         self.assertEqual(word.pos, u"øĸŋøħþ€ĸłþ€øæ«»¢")
 
     def test_word_wrong_encoding(self):
@@ -49,11 +50,11 @@ class TestTagger(unittest.TestCase):
         word.lemma = u"ŧłþłßæ#¶ŋħ~#~@"
         word.pos = u"øĸŋøħþ€ĸłþ€øæ«»¢"
 
-        self.assertIsInstance(word.token, unicode)
+        self.assertIsInstance(word.token, six.text_type)
         self.assertEqual(word.token, u"æßđħłłþłłł@æµß")
-        self.assertIsInstance(word.lemma, unicode)
+        self.assertIsInstance(word.lemma, six.text_type)
         self.assertEqual(word.lemma, u"ŧłþłßæ#¶ŋħ~#~@")
-        self.assertIsInstance(word.pos, unicode)
+        self.assertIsInstance(word.pos, six.text_type)
         self.assertEqual(word.pos, u"øĸŋøħþ€ĸłþ€øæ«»¢")
 
     def test_word_wrong_attrib_set(self):

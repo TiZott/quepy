@@ -8,7 +8,7 @@
 #          Gonzalo Garcia Berrotaran <ggarcia@machinalis.com>
 
 import logging
-
+import six
 from quepy import settings
 from quepy.encodingpolicy import assert_valid_encoding
 
@@ -45,12 +45,15 @@ class Word(object):
             assert_valid_encoding(value)
         object.__setattr__(self, name, value)
 
+    def __str__(self):
+        return self.__unicode__()
+
     def __unicode__(self):
         attrs = (getattr(self, name, u"-") for name in self._attrs)
         return u"|".join(str(x) for x in attrs)
 
     def __repr__(self):
-        return unicode(self)
+        return six.text_type(self)
 
 
 def get_tagger():

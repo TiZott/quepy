@@ -14,7 +14,7 @@ Implements the Quepy Application API
 import logging
 from importlib import import_module
 from types import ModuleType
-
+import six
 from quepy import settings
 from quepy import generation
 from quepy.parsing import QuestionTemplate
@@ -35,10 +35,10 @@ def install(app_name):
     }
     modules = {}
 
-    for module_name, module_path in module_paths.iteritems():
+    for module_name, module_path in six.iteritems(module_paths):
         try:
             modules[module_name] = import_module(module_path.format(app_name))
-        except ImportError, error:
+        except ImportError as error:
             message = u"Error importing {0!r}: {1}"
             raise ImportError(message.format(module_name, error))
 
