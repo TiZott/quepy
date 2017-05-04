@@ -15,6 +15,7 @@ Tagging using NLTK.
 #   - "averaged_perceptron_tagger" in Models
 #   - "wordnet" in Corpora
 
+import sys
 import nltk
 import six
 from quepy.tagger import Word
@@ -63,12 +64,14 @@ def run_nltktagger(string, nltk_data_path=None):
         word = Word(token)
         # Eliminates stuff like JJ|CC
         # decode ascii because they are the penn-like POS tags (are ascii).
-        word.pos = pos.split("|")[0].decode("ascii")
+        word.pos = pos.split("|")[0]
+        if isinstance(word.pos, six.binary_type):
+            word.pos = word.pos.decode("ascii")
 
         mtag = penn_to_morphy_tag(word.pos)
         # Nice shooting, son. What's your name?
         lemma = wordnet.morphy(word.token, pos=mtag)
-        if isinstance(lemma, str):
+        if isinstance(word.pos, six.binary_type):
             # In this case lemma is example-based, because if it's rule based
             # the result should be unicode (input was unicode).
             # Since english is ascii the decoding is ok.

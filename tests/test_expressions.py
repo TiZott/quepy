@@ -36,7 +36,7 @@ def make_canonical_expression(e):
             if isnode(child):
                 child = canon[child]
             childs.append((label, child))
-        childs.sort()
+        childs = sorted(childs, key=lambda x: str(x))
         canon[node] = tuple(childs)
     return canon[e.get_head()]
 

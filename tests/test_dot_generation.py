@@ -8,10 +8,11 @@
 #          Gonzalo Garcia Berrotaran <ggarcia@machinalis.com>
 
 from __future__ import print_function
-import six
+import sys
 import unittest
 import tempfile
 import subprocess
+import six
 from random_expression import random_expression
 from random import seed
 from quepy.dot_generation import expression_to_dot
@@ -51,12 +52,14 @@ class TestDotGeneration(unittest.TestCase):
         _, s = expression_to_dot(e)
         self._standard_check(s, e)
 
+    @unittest.skipIf(sys.version_info[0] >= 3, 'not needed on python 3')
     def test_dot_takes_fails_ascii1(self):
         e = gen_fixedtype("a")
         e += gen_datarel("b", "c")
         e = gen_fixedrelation("d", e)
         self.assertRaises(ValueError, expression_to_dot, e)
 
+    @unittest.skipIf(sys.version_info[0] >= 3, 'not needed on python 3')
     def test_dot_takes_fails_ascii2(self):
         e = gen_fixedtype("·̣─@łæßð~¶½")
         e += gen_datarel("tµŧurułej€", "←ðßðæßđæßæđßŋŋæ @~~·ŋŋ·¶·ŋ“¶¬@@")

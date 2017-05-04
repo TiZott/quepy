@@ -35,7 +35,7 @@ class TestMqlGeneration(unittest.TestCase):
             if isinstance(x, list):
                 self.assertIsInstance(x[0], dict)
                 self.assertEqual(len(x), 1)
-                for key, value in x[0].iteritems():
+                for key, value in six.iteritems(x[0]):
                     self.assertIsInstance(key, six.text_type)
                     q.append(value)
             else:

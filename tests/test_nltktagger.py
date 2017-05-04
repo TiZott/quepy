@@ -13,6 +13,7 @@ Tests for nltktagger.
 """
 
 import unittest
+import six
 from quepy import nltktagger
 from quepy.tagger import Word
 
@@ -27,4 +28,4 @@ class TestNLTKTagger(unittest.TestCase):
 
     def tests_wrong_input(self):
         self.assertRaises(ValueError, nltktagger.run_nltktagger,
-                          "this is not unicode")
+                          six.b("this is not unicode"))
