@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import random
+import six
 from quepy.expression import Expression
 
 
