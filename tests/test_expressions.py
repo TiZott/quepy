@@ -13,6 +13,7 @@ Tests for expressions.
 """
 
 import unittest
+import six
 from quepy.expression import Expression, isnode
 
 
@@ -35,7 +36,7 @@ def make_canonical_expression(e):
             if isnode(child):
                 child = canon[child]
             childs.append((label, child))
-        childs.sort()
+        childs.sort(key=str)
         canon[node] = tuple(childs)
     return canon[e.get_head()]
 
@@ -145,7 +146,7 @@ class TestExpression4(unittest.TestCase, ExpressionTests):
         other.add_data(0, "1")
         other.add_data(2, "3")
         other.decapitate("iuju")
-        for _ in xrange(5):
+        for _ in six.moves.xrange(5):
             self.e.decapitate("nouu")
             self.e += other
 
@@ -237,14 +238,14 @@ class TestCanon97(unittest.TestCase, CanonNotEqualTest):
         other = Expression()
         other.decapitate("onelevel")
         self.a = Expression()
-        for _ in xrange(5):
+        for _ in six.moves.xrange(5):
             self.a.decapitate("step")
             self.a += other
 
         other = Expression()
         other.decapitate("onelevel", reverse=True)
         self.b = Expression()
-        for _ in xrange(5):
+        for _ in six.moves.xrange(5):
             self.b.decapitate("step")
             self.b += other
 
@@ -255,7 +256,7 @@ class TestCanon98(unittest.TestCase, CanonNotEqualTest):
         other.add_data(0, "data")
         other.decapitate("onelevel")
         self.a = Expression()
-        for _ in xrange(5):
+        for _ in six.moves.xrange(5):
             self.a.decapitate("step")
             self.a += other
 
@@ -263,7 +264,7 @@ class TestCanon98(unittest.TestCase, CanonNotEqualTest):
         other.add_data(0, "data")
         other.decapitate("onelevel", reverse=True)
         self.b = Expression()
-        for _ in xrange(5):
+        for _ in six.moves.xrange(5):
             self.b.decapitate("step")
             self.b += other
 

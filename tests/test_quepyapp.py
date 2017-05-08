@@ -13,7 +13,7 @@ Tests for QuepyApp.
 """
 
 import unittest
-
+import six
 import quepy
 
 
@@ -26,8 +26,8 @@ class TestQuepyApp(unittest.TestCase):
         question = "What is this?"
         target, query, userdata = self.app.get_query(question)
 
-        self.assertIsInstance(target, unicode)
-        self.assertIsInstance(query, unicode)
+        self.assertIsInstance(target, six.text_type)
+        self.assertIsInstance(query, six.text_type)
 
     def test_get_user_data(self):
         question = "user data"

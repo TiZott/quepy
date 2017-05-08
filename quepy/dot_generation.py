@@ -5,13 +5,14 @@ Dot generation code.
 """
 
 import random
+import six
 from quepy.expression import isnode
 from quepy.dsl import IsRelatedTo, HasKeyword
 from quepy.encodingpolicy import assert_valid_encoding
 
 
 def escape(x, add_quotes=True):
-    x = unicode(x)
+    x = six.text_type(x)
     x = x.replace(u" ", u"_")
     x = x.replace(u"\n", u"")
     x = x.replace(u"\00", u"")
@@ -29,13 +30,13 @@ def adapt(x):
     if isnode(x):
         x = u"x{}".format(x)
         return x
-    if isinstance(x, basestring):
+    if isinstance(x, six.string_types):
         assert_valid_encoding(x)
         x = escape(x)
         if x.startswith(u"\""):
             return x
         return u'"{}"'.format(x)
-    return unicode(x)
+    return six.text_type(x)
 
 
 def expression_to_dot(e):

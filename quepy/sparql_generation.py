@@ -4,6 +4,7 @@
 Sparql generation code.
 """
 
+import six
 from quepy import settings
 from quepy.dsl import IsRelatedTo
 from quepy.expression import isnode
@@ -13,7 +14,7 @@ _indent = u"  "
 
 
 def escape(string):
-    string = unicode(string)
+    string = six.text_type(string)
     string = string.replace("\n", "")
     string = string.replace("\r", "")
     string = string.replace("\t", "")
@@ -29,12 +30,12 @@ def adapt(x):
     if isnode(x):
         x = u"?x{}".format(x)
         return x
-    if isinstance(x, basestring):
+    if isinstance(x, six.string_types):
         assert_valid_encoding(x)
         if x.startswith(u"\"") or ":" in x:
             return x
         return u'"{}"'.format(x)
-    return unicode(x)
+    return six.text_type(x)
 
 
 def expression_to_sparql(e, full=False):

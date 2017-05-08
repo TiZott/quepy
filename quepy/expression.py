@@ -90,6 +90,7 @@ The reasons are:
 
 from collections import defaultdict
 from copy import deepcopy
+import six
 
 
 def isnode(x):
@@ -174,7 +175,7 @@ class Expression(object):
         """
         Iterates the indexes (the unique identifiers) of the Expression nodes.
         """
-        return xrange(len(self.nodes))
+        return six.moves.xrange(len(self.nodes))
 
     def iter_edges(self, node):
         """

@@ -8,7 +8,7 @@
 #          Gonzalo Garcia Berrotaran <ggarcia@machinalis.com>
 
 import logging
-
+import six
 from quepy import settings
 from quepy.encodingpolicy import assert_valid_encoding
 
@@ -50,7 +50,7 @@ class Word(object):
         return u"|".join(str(x) for x in attrs)
 
     def __repr__(self):
-        return unicode(self)
+        return six.text_type(self)
 
 
 def get_tagger():

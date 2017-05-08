@@ -15,6 +15,7 @@ Tagging using NLTK.
 #   - "maxent_treebank_pos_tagger" in Models
 #   - "wordnet" in Corpora
 
+import six
 import nltk
 from quepy.tagger import Word
 from quepy.encodingpolicy import assert_valid_encoding
@@ -25,7 +26,7 @@ _penn_to_morphy_tag = {}
 def penn_to_morphy_tag(tag):
     assert_valid_encoding(tag)
 
-    for penn, morphy in _penn_to_morphy_tag.iteritems():
+    for penn, morphy in six.iteritems(_penn_to_morphy_tag):
         if tag.startswith(penn):
             return morphy
     return None
@@ -62,12 +63,14 @@ def run_nltktagger(string, nltk_data_path=None):
         word = Word(token)
         # Eliminates stuff like JJ|CC
         # decode ascii because they are the penn-like POS tags (are ascii).
-        word.pos = pos.split("|")[0].decode("ascii")
+        word_pos = pos.split("|")[0]
+        do_decode = isinstance(word_pos, six.binary_type)
+        word.pos = word_pos.decode("ascii") if do_decode else word_pos
 
         mtag = penn_to_morphy_tag(word.pos)
         # Nice shooting, son. What's your name?
         lemma = wordnet.morphy(word.token, pos=mtag)
-        if isinstance(lemma, str):
+        if isinstance(lemma, six.binary_type):
             # In this case lemma is example-based, because if it's rule based
             # the result should be unicode (input was unicode).
             # Since english is ascii the decoding is ok.
