@@ -68,10 +68,10 @@ class TestDotGeneration(unittest.TestCase):
         dot_file = tempfile.NamedTemporaryFile()
         cmdline = "dot %s" % dot_file.name
         msg = "dot returned error code {}, check {} input file."
-        for _ in six.moves.xrange(100):
+        for i in six.moves.xrange(100):
             expression = random_expression()
             _, dot_string = expression_to_dot(expression)
-            with open(dot_file.name, "w") as filehandler:
+            with open(dot_file.name, "wb") as filehandler:
                 filehandler.write(dot_string.encode("utf-8"))
 
             try:

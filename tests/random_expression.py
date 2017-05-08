@@ -21,7 +21,10 @@ def random_data(only_ascii=False):
         elif 0.85 > x:
             c = six.unichr(random.randint(0, 127))
         else:
-            c = six.unichr(random.randint(0, 65535))
+            blacklist = [six.unichr(x) for x in range(0xd800, 0xdfff + 1)]
+            c = blacklist[0]
+            while c in blacklist:
+                c = six.unichr(random.randint(0, 65535))
         data.append(c)
     return u"".join(data)
 
