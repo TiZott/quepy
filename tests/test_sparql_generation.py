@@ -7,6 +7,7 @@
 # Authors: Rafael Carrascosa <rcarrascosa@machinalis.com>
 #          Gonzalo Garcia Berrotaran <ggarcia@machinalis.com>
 
+import sys
 import re
 import unittest
 import six
@@ -87,12 +88,14 @@ class TestSparqlGeneration(unittest.TestCase):
             self._standard_check(s, expression)
             self._sparql_check(s)
 
+    @unittest.skipIf(sys.version_info[0] > 2, 'less relevant in py3')
     def test_sparql_takes_fails_ascii1(self):
         e = gen_fixedtype("a")
         e += gen_datarel("b", "c")
         e = gen_fixedrelation("d", e)
         self.assertRaises(ValueError, expression_to_sparql, e)
 
+    @unittest.skipIf(sys.version_info[0] > 2, 'less relevant in py3')
     def test_sparql_takes_fails_ascii2(self):
         e = gen_fixedtype("·̣─@łæßð~¶½")
         e += gen_datarel("tµŧurułej€", "←ðßðæßđæßæđßŋŋæ @~~·ŋŋ·¶·ŋ“¶¬@@")

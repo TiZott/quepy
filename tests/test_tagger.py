@@ -12,8 +12,10 @@
 Tests for tagger.
 """
 
+import sys
 import unittest
 import six
+
 from quepy import tagger
 
 
@@ -34,6 +36,7 @@ class TestTagger(unittest.TestCase):
         self.assertIsInstance(word.pos, six.text_type)
         self.assertEqual(word.pos, u"øĸŋøħþ€ĸłþ€øæ«»¢")
 
+    @unittest.skipIf(sys.version_info[0] > 2, 'less relevant in py3')
     def test_word_wrong_encoding(self):
         # Token not unicode
         self.assertRaises(ValueError, tagger.Word, "æßđħłłþłłł@æµß",
@@ -57,6 +60,7 @@ class TestTagger(unittest.TestCase):
         self.assertIsInstance(word.pos, six.text_type)
         self.assertEqual(word.pos, u"øĸŋøħþ€ĸłþ€øæ«»¢")
 
+    @unittest.skipIf(sys.version_info[0] > 2, 'less relevant in py3')
     def test_word_wrong_attrib_set(self):
         word = tagger.Word(u"æßđħłłþłłł@æµß")
 

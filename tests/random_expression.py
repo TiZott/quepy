@@ -38,6 +38,8 @@ def random_relation(only_ascii=False):
     class UnicodeableDummy(object):
         def __unicode__(self):
             return data
+        def __str__(self):
+            return data
     return UnicodeableDummy()
 
 
