@@ -14,7 +14,7 @@ Movie related regex.
 from refo import Plus, Question
 from quepy.dsl import HasKeyword
 from quepy.parsing import Lemma, Lemmas, Pos, QuestionTemplate, Particle
-from dsl import IsMovie, NameOf, IsPerson, \
+from .dsl import IsMovie, NameOf, IsPerson, \
     DirectedBy, LabelOf, DurationOf, HasActor, HasName, ReleaseDateOf, \
     DirectorOf, StarsIn, DefinitionOf
 
@@ -112,7 +112,7 @@ class ActedOnQuestion(QuestionTemplate):
             (Question(Lemma("list")) + movie + Lemma("star") + Actor())
 
     def interpret(self, match):
-        movie = IsMovie() + HasActor(match.actor)
+        movie = IsMovie() + HasActor( match.actor )
         movie_name = NameOf(movie)
         return movie_name, "enum"
 

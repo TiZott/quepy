@@ -76,7 +76,7 @@ class UTCof(FixedRelation):
 
 
 class PresidentOf(FixedRelation):
-    relation = "dbpprop:leaderTitle"
+    relation = "dbpedia-owl:leader"
     reverse = True
 
 
@@ -96,7 +96,7 @@ class LanguageOf(FixedRelation):
 
 
 class PopulationOf(FixedRelation):
-    relation = "dbpprop:populationCensus"
+    relation = "dbpedia-owl:populationTotal"
     reverse = True
 
 
@@ -135,7 +135,7 @@ class ReleaseDateOf(FixedRelation):
 
 
 class StarsIn(FixedRelation):
-    relation = "dbpprop:starring"
+    relation = "dbpedia-owl:starring"
     reverse = True
 
 
@@ -150,7 +150,7 @@ class ShowNameOf(FixedRelation):
 
 
 class HasActor(FixedRelation):
-    relation = "dbpprop:starring"
+    relation = "dbpedia-owl:starring"
 
 
 class CreatorOf(FixedRelation):
